@@ -1,0 +1,25 @@
+.demo-card-square.mdl-card {
+  width: 300px;
+  height: 320px;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+.demo-card-square > .mdl-card__title {
+  color: #fff;
+  background: url('https://getmdl.io/assets/demos/dog.png') bottom right 15% no-repeat #46B6AC;
+}
+
+.demo-list-control {
+  width: 300px;
+  margin: 0 auto;
+}
+.delete {
+  cursor: pointer;
+}
+.delete:hover {
+  color: red;
+}
+form {
+  width: 300px;
+  margin: 0 auto;
+}
