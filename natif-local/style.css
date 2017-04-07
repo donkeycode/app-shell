@@ -6,7 +6,7 @@
 }
 .demo-card-square > .mdl-card__title {
   color: #fff;
-  background: url('https://getmdl.io/assets/demos/dog.png') bottom right 15% no-repeat #46B6AC;
+  background: url('./dog.png') bottom right 15% no-repeat #46B6AC;
 }
 
 .demo-list-control {
