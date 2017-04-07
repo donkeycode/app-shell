@@ -55,7 +55,11 @@ function getTodos() {
 function postTodo(body) {
   fetch(apiUrl, {
     method: 'POST',
-    body: body
+    body: JSON.stringify(body),
+    headers: {
+      'Accept': 'application/json, text/plain, */*',
+      'Content-Type': 'application/json'
+    }
   })
   .then(function(response) {
     return response.json();
@@ -67,8 +71,7 @@ function postTodo(body) {
 
 function deleteTodo(id) {
   fetch(apiUrl + '/' + id, {
-    method: 'DELETE',
-    body: {checked: checked}
+    method: 'DELETE'
   })
   .then(function(response) {
     return response.json();
@@ -81,7 +84,11 @@ function deleteTodo(id) {
 function patchTodo(id, checked) {
   fetch(apiUrl + '/' + id, {
     method: 'PATCH',
-    body: {checked: checked}
+    body: JSON.stringify({checked: checked}),
+    headers: {
+      'Accept': 'application/json, text/plain, */*',
+      'Content-Type': 'application/json'
+    }
   })
   .then(function(response) {
     return response.json();
