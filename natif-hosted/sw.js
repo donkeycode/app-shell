@@ -15,9 +15,13 @@ self.addEventListener('install', function(event) {
 });
 
 self.addEventListener('fetch', function(event) {
-  if (event.request.url == 'https://infinite-basin-52644.herokuapp.com/posts') {
+  if (event.request.method !== 'GET') {
+    caches.delete('natif-hosted-api');
+    return;
+  }
+  if (event.request.method === 'GET' && event.request.url == 'https://infinite-basin-52644.herokuapp.com/posts') {
     event.respondWith(
-      caches.open('mysite-dynamic').then(function(cache) {
+      caches.open('natif-hosted-api').then(function(cache) {
         return cache.match(event.request).then(function (response) {
           return response || fetch(event.request).then(function(response) {
             cache.put(event.request, response.clone());
@@ -45,7 +49,7 @@ self.addEventListener('fetch', function(event) {
         return fetch(fetchRequest).then(
           function(response) {
             // Check if we received a valid response
-            if(!response || response.status !== 200) { // || response.type !== 'basic'
+            if(!response || response.status !== 200 || response.type !== 'basic') { // || response.type !== 'basic'
               return response;
             }
 
