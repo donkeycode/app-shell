@@ -41,60 +41,54 @@ function writeTodosToDom(todos) {
 }
 
 function getTodos() {
-  var xhr = new XMLHttpRequest();
-  xhr.open('GET', apiUrl);
-  xhr.onload = function() {
-    if (xhr.status === 200) {
-      writeTodosToDom(JSON.parse(xhr.responseText));
-    } else {
-      console.error('Request failed.  Returned status of ' + xhr.status);
-    }
-  };
-  xhr.send();
+  fetch(apiUrl, {
+    method: 'GET'
+  })
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(response) {
+    writeTodosToDom(response);
+  });
 }
 
 function postTodo(body) {
-  var xhr = new XMLHttpRequest();
-
-  xhr.open('POST', apiUrl);
-  xhr.setRequestHeader('Content-Type', 'application/json');
-  xhr.onload = function() {
-    if (xhr.status === 200 || xhr.status === 201) {
-      getTodos();
-    } else {
-      console.error('Request failed.  Returned status of ' + xhr.status);
-    }
-  };
-  xhr.send(JSON.stringify(body));
+  fetch(apiUrl, {
+    method: 'POST',
+    body: body
+  })
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(response) {
+    getTodos();
+  });
 }
 
 function deleteTodo(id) {
-  var xhr = new XMLHttpRequest();
-
-  xhr.open('DELETE', apiUrl + '/' + id);
-  xhr.onload = function() {
-    if (xhr.status === 200 || xhr.status === 201) {
-      getTodos();
-    } else {
-      console.error('Request failed.  Returned status of ' + xhr.status);
-    }
-  };
-  xhr.send();
+  fetch(apiUrl + '/' + id, {
+    method: 'DELETE',
+    body: {checked: checked}
+  })
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(response) {
+    getTodos();
+  });
 }
 
 function patchTodo(id, checked) {
-  var xhr = new XMLHttpRequest();
-
-  xhr.open('PATCH', apiUrl + '/' + id);
-  xhr.setRequestHeader('Content-Type', 'application/json');
-  xhr.onload = function() {
-    if (xhr.status === 200 || xhr.status === 201) {
-      getTodos();
-    } else {
-      console.error('Request failed.  Returned status of ' + xhr.status);
-    }
-  };
-  xhr.send(JSON.stringify({checked: checked}));
+  fetch(apiUrl + '/' + id, {
+    method: 'PATCH',
+    body: {checked: checked}
+  })
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(response) {
+    getTodos();
+  });
 }
 
 function cbSubmit(e) {
