@@ -37,7 +37,9 @@ function writeTodosToDom(todos) {
     boxe.addEventListener('click', cbBoxClicked);
   }
 
-  componentHandler.upgradeDom('MaterialCheckbox');
+  setTimeout(() => {
+    componentHandler.upgradeDom('MaterialCheckbox');
+  });
 }
 
 function getTodos() {
