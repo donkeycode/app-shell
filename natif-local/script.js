@@ -41,60 +41,61 @@ function writeTodosToDom(todos) {
 }
 
 function getTodos() {
-  var xhr = new XMLHttpRequest();
-  xhr.open('GET', apiUrl);
-  xhr.onload = function() {
-    if (xhr.status === 200) {
-      writeTodosToDom(JSON.parse(xhr.responseText));
-    } else {
-      console.error('Request failed.  Returned status of ' + xhr.status);
-    }
-  };
-  xhr.send();
+  fetch(apiUrl, {
+    method: 'GET'
+  })
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(response) {
+    writeTodosToDom(response);
+  });
 }
 
 function postTodo(body) {
-  var xhr = new XMLHttpRequest();
-
-  xhr.open('POST', apiUrl);
-  xhr.setRequestHeader('Content-Type', 'application/json');
-  xhr.onload = function() {
-    if (xhr.status === 200 || xhr.status === 201) {
-      getTodos();
-    } else {
-      console.error('Request failed.  Returned status of ' + xhr.status);
+  fetch(apiUrl, {
+    method: 'POST',
+    body: JSON.stringify(body),
+    headers: {
+      'Accept': 'application/json, text/plain, */*',
+      'Content-Type': 'application/json'
     }
-  };
-  xhr.send(JSON.stringify(body));
+  })
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(response) {
+    getTodos();
+  });
 }
 
 function deleteTodo(id) {
-  var xhr = new XMLHttpRequest();
-
-  xhr.open('DELETE', apiUrl + '/' + id);
-  xhr.onload = function() {
-    if (xhr.status === 200 || xhr.status === 201) {
-      getTodos();
-    } else {
-      console.error('Request failed.  Returned status of ' + xhr.status);
-    }
-  };
-  xhr.send();
+  fetch(apiUrl + '/' + id, {
+    method: 'DELETE'
+  })
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(response) {
+    getTodos();
+  });
 }
 
 function patchTodo(id, checked) {
-  var xhr = new XMLHttpRequest();
-
-  xhr.open('PATCH', apiUrl + '/' + id);
-  xhr.setRequestHeader('Content-Type', 'application/json');
-  xhr.onload = function() {
-    if (xhr.status === 200 || xhr.status === 201) {
-      getTodos();
-    } else {
-      console.error('Request failed.  Returned status of ' + xhr.status);
+  fetch(apiUrl + '/' + id, {
+    method: 'PATCH',
+    body: JSON.stringify({checked: checked}),
+    headers: {
+      'Accept': 'application/json, text/plain, */*',
+      'Content-Type': 'application/json'
     }
-  };
-  xhr.send(JSON.stringify({checked: checked}));
+  })
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(response) {
+    getTodos();
+  });
 }
 
 function cbSubmit(e) {
