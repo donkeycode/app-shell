@@ -13,3 +13,11 @@ It keeps your UI local and pulls in content dynamically through an API.
 # Checklist
 
 https://developers.google.com/web/progressive-web-apps/checklist
+
+# Development environment
+
+To test locally:
+
+```
+python -m SimpleHTTPServer 8000
+```
