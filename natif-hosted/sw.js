@@ -1,7 +1,6 @@
 var CACHE_NAME = 'my-site-cache-v1';
 var urlsToCache = [
   './',
-  'https://code.getmdl.io/1.3.0/material.indigo-pink.min.css'
 ];
 
 self.addEventListener('install', function(event) {
@@ -9,25 +8,17 @@ self.addEventListener('install', function(event) {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(function(cache) {
-        console.log('Opened cache');
+        console.log('Opened cache', cache);
         return cache.addAll(urlsToCache);
       })
   );
 });
 
-self.addEventListener('foreignfetch', function(e) {
-  console.log('foreignfetch');
-  e.respondWith(fetch(e.request).then(response =>
-    ({response: response, origin: e.origin, headers: ['...']})));
-});
-
 self.addEventListener('fetch', function(event) {
-  console.log('fetch', event.request.referrer);
   event.respondWith(
     caches.match(event.request)
       .then(function(response) {
         // Cache hit - return response
-        console.log('res', response);
         if (response) {
           return response;
         }
@@ -38,11 +29,10 @@ self.addEventListener('fetch', function(event) {
         // to clone the response.
         var fetchRequest = event.request.clone();
 
-        console.log('avant fetch');
         return fetch(fetchRequest).then(
           function(response) {
             // Check if we received a valid response
-            if(!response || response.status !== 200 || response.type !== 'basic') {
+            if(!response || response.status !== 200) { // || response.type !== 'basic'
               return response;
             }
 
