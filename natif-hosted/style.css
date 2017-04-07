@@ -26,3 +26,17 @@ form {
 .mdl-textfield__label {
   color: #999;
 }
+
+.skeleton .mdl-list__item-primary-content,
+.skeleton .mdl-list__item-secondary-action {
+  background: #ccc;
+  height: 16px;
+  display: block;
+}
+.skeleton .mdl-list__item-secondary-action {
+  width: 16px;
+  margin-left: 10px;
+}
+.skeleton {
+  padding-right: 20px;
+}
