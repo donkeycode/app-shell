@@ -16,7 +16,7 @@ insert_final_newline = false
 trim_trailing_whitespace = false
 
 [*.{php,html,twig,yml,xml}]
-indent_size = 4
+indent_size = 2
 
 [Makefile]
 indent_size = 1
