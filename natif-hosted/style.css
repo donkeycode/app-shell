@@ -23,3 +23,6 @@ form {
   width: 300px;
   margin: 0 auto;
 }
+.mdl-textfield__label {
+  color: #999;
+}
